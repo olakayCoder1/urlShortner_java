@@ -1,55 +1,43 @@
 package com.olakayurlshot.urlshortener.entity;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@Builder
 @Entity
-@Table(name = "token")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Token {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+  @Id
+  @GeneratedValue
+  public Integer id;
 
-    @Column(name = "token")
-    private String token;
+  @Column(unique = true)
+  public String token;
 
-    @Column(name = "is_logged_out")
-    private boolean loggedOut;
+  @Enumerated(EnumType.STRING)
+  public TokenType tokenType = TokenType.BEARER;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+  public boolean revoked;
 
-    public Integer getId() {
-        return id;
-    }
+  public boolean expired;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
+  public boolean loggedOut;
 
-    public String getToken() {
-        return token;
-    }
-
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public boolean isLoggedOut() {
-        return loggedOut;
-    }
-
-    public void setLoggedOut(boolean loggedOut) {
-        this.loggedOut = loggedOut;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "user_id")
+  public User user;
 }

@@ -9,7 +9,6 @@ import javax.crypto.SecretKey;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
-import com.olakayurlshot.urlshortener.entity.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -54,7 +53,7 @@ public class JWTService {
                             .getPayload();
     }
 
-    public String generateToken(User user){
+    public String generateToken(UserDetails user){
         String token = Jwts
                             .builder()
                             .subject(user.getUsername())

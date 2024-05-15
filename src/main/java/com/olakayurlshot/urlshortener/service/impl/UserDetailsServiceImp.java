@@ -1,9 +1,11 @@
-package com.olakayurlshot.urlshortener.service;
+package com.olakayurlshot.urlshortener.service.impl;
+
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
 
 import com.olakayurlshot.urlshortener.repository.UserRepository;
 
@@ -11,7 +13,7 @@ import com.olakayurlshot.urlshortener.repository.UserRepository;
 public class UserDetailsServiceImp implements UserDetailsService {
     private UserRepository repository;
 
-    public void UserDetailsService(UserRepository repository) {
+    public UserDetailsServiceImp(UserRepository repository) {
         this.repository = repository;
     }
 

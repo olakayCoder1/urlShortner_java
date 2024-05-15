@@ -9,8 +9,9 @@ import org.springframework.security.web.authentication.WebAuthenticationDetailsS
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.olakayurlshot.urlshortener.repository.TokenRepository;
 import com.olakayurlshot.urlshortener.service.JWTService;
-import com.olakayurlshot.urlshortener.service.UserDetailsServiceImp;
+import com.olakayurlshot.urlshortener.service.impl.UserDetailsServiceImp;
 
 import io.micrometer.common.lang.NonNull;
 import jakarta.servlet.FilterChain;
@@ -23,9 +24,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JWTAuthenticationFilter extends OncePerRequestFilter{
 
-    private JWTService jwtService;
+    private final JWTService jwtService;
 
-    private UserDetailsServiceImp userDetailsService;
+    private final UserDetailsServiceImp userDetailsService;
+
+    private final TokenRepository tokenRepository;
 
 
     @Override
@@ -41,22 +44,31 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter{
         }
         String token = authHeader.substring(7);
         String username = jwtService.extractUsername(token);
-
+        System.err.println(token);
+        System.out.println(username);
+        
         if(username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            // var isTokenValid = tokenRepository.findByToken(token)
+            // .map(t -> !t.isExpired())
+            // .orElse(false);
 
-
-            if(jwtService.isValid(token, userDetails)) {
+            // System.out.println(isTokenValid);
+        if (jwtService.isValid(token, userDetails)) {
                 UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                         userDetails, null, userDetails.getAuthorities()
                 );
-
+                System.out.println(authToken);
                 authToken.setDetails(
                         new WebAuthenticationDetailsSource().buildDetails(request)
                 );
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
+                
+                var user_name = SecurityContextHolder.getContext().getAuthentication();
+
+                System.out.println(user_name);
             }
         }
         filterChain.doFilter(request, response);
