@@ -1,6 +1,6 @@
 ### URL Shortener API Documentation
 
-This document provides an overview of the URL Shortener API collection named "URL SHORT" and includes instructions for using the endpoints defined in this collection. 
+This document provides an overview of the URL Shortener API collection named "URL SHORT" and includes instructions for using the endpoints defined in this collection.
 
 #### Collection Overview
 - **Collection Name**: URL SHORT
@@ -191,5 +191,73 @@ This document provides an overview of the URL Shortener API collection named "UR
     "message": "Redirecting to original URL"
 }
 ```
+
+### Extending the Project
+
+To extend this project with additional functionality, follow these steps:
+
+1. **Clone the Repository**
+    ```sh
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
+
+2. **Set Up the Environment**
+    - Ensure you have Java and Maven installed.
+    - Create a `.env` file in the root directory and add the required environment variables (e.g., database connection details).
+
+3. **Add New Endpoints**
+    - Define new endpoints in your Spring Boot controllers.
+    - Implement the required service methods and repository queries.
+
+4. **Update the Postman Collection**
+    - Add new requests to your Postman collection to test the new endpoints.
+    - Export the updated Postman collection and replace the existing one in the repository.
+
+5. **Run the Application**
+    ```sh
+    mvn clean install
+    mvn spring-boot:run
+    ```
+
+6. **Test New Functionality**
+    - Use Postman to test the new endpoints.
+    - Ensure all existing tests pass and add new tests for the new functionality.
+
+### Cloning the Repository
+
+To set up the project locally, follow these steps:
+
+1. **Clone the Repository**
+    ```sh
+    git clone <repository-url>
+    cd <repository-directory>
+    ```
+
+2. **Install Dependencies**
+    - Ensure you have Java and Maven installed on your machine.
+    - Install the required dependencies by running:
+    ```sh
+    mvn clean install
+    ```
+
+3. **Set Up the Database**
+    - Configure your database settings in `application.properties` or `application.yml`.
+    - Apply any database migrations or initial setup scripts if required.
+
+4. **Run the Application**
+    ```sh
+    mvn spring-boot:run
+    ```
+
+5. **Import Postman Collection**
+    - Open Postman and import the provided Postman collection using the collection link.
+
+6. **Set Environment Variables in Postman**
+    - Set the `BASE_URL` and `Auth_Token_Global` in the Postman environment to match your local setup.
+
+7. **Start Using the API**
+    - Use the Postman collection to interact with the API endpoints.
+    - Verify the functionality by making requests and checking the responses.
 
 This documentation provides an overview of the URL Shortener API and how to use the endpoints defined in the Postman collection. Ensure to replace placeholder values like `{id}`, `{shortened_url}`, and tokens with actual values when making requests.
